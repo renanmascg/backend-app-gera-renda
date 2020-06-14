@@ -7,3 +7,5 @@ configkeys.ts
 .env
 
 ormconfig.json
+
+*/config/*.ts
