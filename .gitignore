@@ -6,3 +6,4 @@ configkeys.ts
 
 .env
 
+ormconfig.json
