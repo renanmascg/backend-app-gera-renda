@@ -8,6 +8,7 @@ const ServiceSchema: Schema = new Schema(
 		endereco: { type: String, required: true },
 		reviewScore: { type: Number, default: 0.0 },
 		telefone: { type: String, required: true },
+		logoUrl: { type: String, required: true },
 		categoria: {
 			type: Schema.Types.ObjectId,
 			ref: 'aki-categories',
