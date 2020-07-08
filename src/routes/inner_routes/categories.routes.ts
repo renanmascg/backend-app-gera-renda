@@ -28,9 +28,13 @@ categoriesRouter.post(
 			} = req;
 
 			const createCategorie = new CreateCategorieService();
-			await createCategorie.exec({ name: categorie, image: file });
 
-			return res.json({ message: 'ok' });
+			const newCategorie = await createCategorie.exec({
+				name: categorie,
+				image: file,
+			});
+
+			return res.json(newCategorie);
 		} catch (error) {
 			return res.status(400).json({ err: error.message });
 		}
