@@ -1,10 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
 
-export interface ICategories {
-	name: string;
-	imageUrl: string;
-}
-
 const CategoriesSchema: Schema = new Schema(
 	{
 		name: { type: String, required: true },

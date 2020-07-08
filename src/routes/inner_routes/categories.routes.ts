@@ -9,7 +9,7 @@ const upload = multer();
 
 categoriesRouter.get('/', async (req, res) => {
 	try {
-		const categoriesList = CategoriesSchema.find({});
+		const categoriesList = await CategoriesSchema.find({});
 
 		return res.json(categoriesList);
 	} catch (error) {
