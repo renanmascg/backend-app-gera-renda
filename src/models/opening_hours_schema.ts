@@ -1,9 +1,15 @@
 import mongoose, { Schema } from 'mongoose';
+import { bool } from 'aws-sdk/clients/signer';
+
+export interface IDayOpening {
+	isOpen: bool;
+	start?: number;
+	end?: number;
+}
 
 const OpeningHoursSchema: Schema = new Schema(
 	{
-		serviceId: { type: Schema.Types.ObjectId, required: true },
-		sun: {
+		dom: {
 			isOpen: { type: Boolean, default: false },
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
@@ -18,22 +24,22 @@ const OpeningHoursSchema: Schema = new Schema(
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
 		},
-		wed: {
+		qua: {
 			isOpen: { type: Boolean, default: false },
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
 		},
-		thu: {
+		qui: {
 			isOpen: { type: Boolean, default: false },
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
 		},
-		fri: {
+		sex: {
 			isOpen: { type: Boolean, default: false },
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
 		},
-		sat: {
+		sab: {
 			isOpen: { type: Boolean, default: false },
 			start: { type: Number, min: 0, max: 23 },
 			end: { type: Number, min: 0, max: 23 },
