@@ -1,18 +1,42 @@
 import { Router } from 'express';
 
+import multer from 'multer';
 import CreateNewUserServerService from '../../service/createNewUserServerService';
 
 const servicesRouter = Router();
+const upload = multer();
 
-servicesRouter.post('/', async (req, res) => {
+servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 	try {
-		const { daysOpening } = req.body;
+		const { file } = req;
+
+		const {
+			name,
+			lat,
+			long,
+			endereco,
+			telefone,
+			descricao,
+			categoria,
+			formasPagamento,
+			daysOpening,
+		} = req.body;
 
 		const createNewUserServer = new CreateNewUserServerService();
 
-		await createNewUserServer.exec({ daysOpening });
+		const newService = await createNewUserServer.exec({
+			daysOpening,
+			name,
+			lat,
+			long,
+			endereco,
+			telefone,
+			descricao,
+			categoria,
+			formasPagamento,
+		});
 
-		return res.json({ message: 'ok' });
+		return res.json(newService);
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}
