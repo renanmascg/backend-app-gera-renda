@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import multer from 'multer';
 import CreateNewUserServerService from '../../service/createNewUserServerService';
+import FindWithinRangeService from '../../service/findWithinRangeService';
 
 const servicesRouter = Router();
 const upload = multer();
@@ -37,6 +38,24 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 		});
 
 		return res.json(newService);
+	} catch (error) {
+		return res.status(400).json({ err: error.message });
+	}
+});
+
+servicesRouter.post('/near-me', async (req, res) => {
+	try {
+		const { lat, long, distance } = req.body;
+
+		const findWithinRange = new FindWithinRangeService();
+
+		const documents = await findWithinRange.findWithinRange({
+			lat,
+			long,
+			distance,
+		});
+
+		return res.json(documents);
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}
