@@ -102,8 +102,9 @@ class CreateNewUserServer {
 		try {
 			const newService = await ServiceSchema.create({
 				name,
-				lat,
-				long,
+				location: {
+					coordinates: [lat, long],
+				},
 				categoria,
 				endereco,
 				telefone,

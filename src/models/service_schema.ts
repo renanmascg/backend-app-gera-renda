@@ -3,8 +3,10 @@ import mongoose, { Schema } from 'mongoose';
 const ServiceSchema: Schema = new Schema(
 	{
 		name: { type: String, required: true },
-		lat: { type: Number, required: true },
-		long: { type: Number, required: true },
+		location: {
+			type: { type: String, default: 'Point' },
+			coordinates: { type: [Number] },
+		},
 		endereco: { type: String, required: true },
 		telefone: { type: String, required: true },
 		categoria: {
@@ -31,5 +33,7 @@ const ServiceSchema: Schema = new Schema(
 		timestamps: true,
 	},
 );
+
+ServiceSchema.index({ location: '2dsphere' });
 
 export default mongoose.model('aki-service', ServiceSchema);
