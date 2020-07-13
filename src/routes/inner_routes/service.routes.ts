@@ -4,6 +4,7 @@ import multer from 'multer';
 import CreateNewUserServerService from '../../service/createNewUserServerService';
 import FindWithinRangeService from '../../service/findWithinRangeService';
 import FindServiceByCategorieService from '../../service/findServiceByCategorieService';
+import FindServiceOrCategoriesService from '../../service/findServiceOrCategorieService';
 
 const servicesRouter = Router();
 const upload = multer();
@@ -76,6 +77,20 @@ servicesRouter.post('/categorie-service', async (req, res) => {
 		});
 
 		return res.json(services);
+	} catch (error) {
+		return res.status(400).json({ err: error.message });
+	}
+});
+
+servicesRouter.post('/find', async (req, res) => {
+	try {
+		const { keyword, lat, long } = req.body;
+
+		const findServiceOrCategorie = new FindServiceOrCategoriesService();
+
+		const response = await findServiceOrCategorie.exec({ keyword, lat, long });
+
+		return res.json(response);
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}
