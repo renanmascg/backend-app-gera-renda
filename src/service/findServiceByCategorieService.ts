@@ -1,8 +1,8 @@
 import { Document } from 'mongoose';
-import * as geolib from 'geolib';
 
 import ServiceSchema from '../models/service_schema';
 import { ServiceInterface } from '../models/interfaces/service_interface';
+import calculateDistanceBetweenCoordinates from './generic_functions/calculate_distance_between_coordinates';
 
 interface RequestDTO {
 	lat: number;
@@ -25,7 +25,11 @@ class FindServiceByCategorieService {
 			categorieId,
 		);
 
-		const services = this.calculateDistance(documents, lat, long);
+		const services = calculateDistanceBetweenCoordinates({
+			list: documents,
+			latPosition: lat,
+			longPosition: long,
+		});
 
 		return services;
 	}
@@ -51,35 +55,6 @@ class FindServiceByCategorieService {
 		});
 
 		return documents;
-	}
-
-	private calculateDistance(
-		list: Document[],
-		latPosition: number,
-		longPosition: number,
-	): ServiceInterface[] {
-		const calculatedDistance = list.map(doc => {
-			const obj: ServiceInterface = doc.toObject();
-
-			obj.distance = (
-				geolib.getDistance(
-					{
-						latitude: latPosition,
-						longitude: longPosition,
-					},
-					{
-						latitude: obj.location.coordinates[0],
-						longitude: obj.location.coordinates[1],
-					},
-				) / 1000
-			).toFixed(1);
-
-			delete obj.location;
-
-			return obj;
-		});
-
-		return calculatedDistance;
 	}
 }
 
