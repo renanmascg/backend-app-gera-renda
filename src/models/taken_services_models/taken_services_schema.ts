@@ -21,4 +21,4 @@ const TakenServiceSchema: Schema = new Schema(
 	},
 );
 
-export default mongoose.model('aki-reviews', TakenServiceSchema);
+export default mongoose.model('aki-takenservice', TakenServiceSchema);
