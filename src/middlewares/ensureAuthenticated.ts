@@ -2,11 +2,17 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import authConfig from '../config/auth';
 
+interface TokenPayload {
+	iat: number;
+	exp: number;
+	sub: string;
+}
+
 export default function ensureAuthenticated(
 	request: Request,
 	response: Response,
 	next: NextFunction,
-): void {
+): Response | void {
 	const authHeader = request.headers.authorization;
 
 	if (!authHeader) {
@@ -18,8 +24,12 @@ export default function ensureAuthenticated(
 	try {
 		const decoded = verify(token, authConfig.jwt.secret);
 
-		next();
+		const { sub } = decoded as TokenPayload;
+
+		request.user = { id: sub };
+
+		return next();
 	} catch {
-		throw new Error('Invalid JWT Tokent');
+		return response.json({ error: 'Invalid JWT Tokent' });
 	}
 }
