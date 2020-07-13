@@ -1,6 +1,9 @@
 import { Router } from 'express';
 
-import AddNewReviewService from '../../service/ReviewsServices/addNewReviewService';
+import UpdateReviewService from '../../service/ReviewsServices/updateReviewService';
+import AddReviewService from '../../service/ReviewsServices/addReviewService';
+
+import ensureAuthenticated from '../../middlewares/ensureAuthenticated';
 
 const reviewsRouter = Router();
 
@@ -8,16 +11,36 @@ reviewsRouter.get('/', async (req, res) => {
 	return res.json({ hello: 'ok!' });
 });
 
-reviewsRouter.post('/', async (req, res) => {
+reviewsRouter.post('/', ensureAuthenticated, async (req, res) => {
 	try {
-		const { rate, text, serviceId } = req.body;
+		const {
+			user,
+			body: { serviceId },
+		} = req;
 
-		const addNewReview = new AddNewReviewService();
+		const addReview = new AddReviewService();
 
-		const review = await addNewReview.exec({
+		const review = await addReview.exec({
+			serviceId,
+			userId: user.id,
+		});
+
+		return res.json(review);
+	} catch (error) {
+		return res.status(400).json({ err: error.message });
+	}
+});
+
+reviewsRouter.put('/', ensureAuthenticated, async (req, res) => {
+	try {
+		const { rate, text, id } = req.body;
+
+		const updateReview = new UpdateReviewService();
+
+		const review = await updateReview.exec({
 			rate,
 			text,
-			serviceId,
+			takenServiceId: id,
 		});
 
 		return res.json(review);
