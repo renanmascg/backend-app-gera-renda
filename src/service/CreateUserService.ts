@@ -1,6 +1,8 @@
 import { hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import UserSchema from '../models/user_models/user_schema';
 import { UserInterface } from '../models/interfaces/user_interface';
+import configs from '../config/auth';
 
 interface RequestDTO {
 	name: string;
@@ -8,12 +10,13 @@ interface RequestDTO {
 	password: string;
 }
 
+interface Response {
+	user: UserInterface;
+	token: string;
+}
+
 class CreateUserService {
-	public async exec({
-		name,
-		email,
-		password,
-	}: RequestDTO): Promise<UserInterface> {
+	public async exec({ name, email, password }: RequestDTO): Promise<Response> {
 		const checkUserExists = await UserSchema.findOne({ email });
 
 		if (checkUserExists) {
@@ -28,7 +31,12 @@ class CreateUserService {
 			password: hashedPassword,
 		});
 
-		return user.toObject();
+		const token = sign({}, configs.jwt.secret, {
+			subject: user.id,
+			expiresIn: configs.jwt.expiresIn,
+		});
+
+		return { user: user.toObject(), token };
 	}
 }
 
