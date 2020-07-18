@@ -57,7 +57,7 @@ servicesRouter.post('/near-me', async (req, res) => {
 			distance,
 		});
 
-		return res.json(documents);
+		return res.json({ services: documents });
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}

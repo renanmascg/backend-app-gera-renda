@@ -23,8 +23,8 @@ export default function calculateDistanceBetweenCoordinates({
 					longitude: longPosition,
 				},
 				{
-					latitude: obj.location.coordinates[0],
-					longitude: obj.location.coordinates[1],
+					longitude: obj.location.coordinates[0],
+					latitude: obj.location.coordinates[1],
 				},
 			) / 1000
 		).toFixed(1);

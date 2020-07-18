@@ -11,7 +11,7 @@ categoriesRouter.get('/', async (req, res) => {
 	try {
 		const categoriesList = await CategoriesSchema.find({});
 
-		return res.json(categoriesList);
+		return res.json({ categories: categoriesList });
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}

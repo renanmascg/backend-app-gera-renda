@@ -103,7 +103,7 @@ class CreateNewUserServer {
 			const newService = await ServiceSchema.create({
 				name,
 				location: {
-					coordinates: [lat, long],
+					coordinates: [long, lat],
 				},
 				categoria,
 				endereco,

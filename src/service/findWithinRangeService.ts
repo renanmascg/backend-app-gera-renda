@@ -19,7 +19,7 @@ class FindWithinRangeService {
 				$near: {
 					$geometry: {
 						type: 'Point',
-						coordinates: [lat, long],
+						coordinates: [long, lat],
 					},
 					$maxDistance: distance,
 					$minDistance: 0,
