@@ -76,7 +76,7 @@ servicesRouter.post('/categorie-service', async (req, res) => {
 			categorieId,
 		});
 
-		return res.json(services);
+		return res.json({ services });
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}
