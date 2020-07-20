@@ -7,6 +7,7 @@ import ServiceSchema from '../models/service_schema';
 
 interface RequestDTO {
 	name: string;
+	email: string;
 	lat: number;
 	long: number;
 	endereco: string;
@@ -20,6 +21,7 @@ interface RequestDTO {
 
 interface ServiceParamsInterface {
 	name: string;
+	email: string;
 	lat: number;
 	long: number;
 	endereco: string;
@@ -32,13 +34,14 @@ interface ServiceParamsInterface {
 
 interface SaveAwsInterface {
 	serviceId: string;
-	name: string;
-	image: Express.Multer.File;
+	name?: string;
+	image?: Express.Multer.File;
 }
 
 class CreateNewUserServer {
 	public async exec({
 		name,
+		email,
 		lat,
 		long,
 		endereco,
@@ -55,6 +58,7 @@ class CreateNewUserServer {
 
 		const newService = await this.createNewService({
 			name,
+			email,
 			lat,
 			long,
 			endereco,
@@ -90,6 +94,7 @@ class CreateNewUserServer {
 
 	private async createNewService({
 		name,
+		email,
 		lat,
 		long,
 		endereco,
@@ -102,6 +107,7 @@ class CreateNewUserServer {
 		try {
 			const newService = await ServiceSchema.create({
 				name,
+				email,
 				location: {
 					coordinates: [long, lat],
 				},
@@ -120,19 +126,21 @@ class CreateNewUserServer {
 		}
 	}
 
-	private async createAndSaveUserLogoAWS({
+	public async createAndSaveUserLogoAWS({
 		serviceId,
 		image,
-		name,
 	}: SaveAwsInterface): Promise<Document | null> {
 		const S3Storage = new S3StorageProvider();
 
-		try {
-			const imageName = `${name}.png`;
+		if (!image) {
+			return null;
+		}
 
-			const logoUrl = await S3Storage.uploadFileToAWS({
+		try {
+			const logoUrl = await S3Storage.uploadLogoFileToAWS({
 				file: image,
-				name: `categorias/${imageName}`,
+				name: `service/${serviceId}/logo.${image.mimetype.split('/')[1]}`,
+				contentType: image.mimetype,
 			});
 
 			const updatedService = await ServiceSchema.findOneAndUpdate(
@@ -149,7 +157,6 @@ class CreateNewUserServer {
 
 			return updatedService;
 		} catch (e) {
-			console.log(e);
 			throw Error('Error uploading image logo to aws.');
 		}
 	}

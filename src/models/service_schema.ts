@@ -3,6 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 const ServiceSchema: Schema = new Schema(
 	{
 		name: { type: String, required: true },
+		email: { type: String, required: true, unique: true },
 		location: {
 			type: { type: String, default: 'Point' },
 			coordinates: { type: [Number] },

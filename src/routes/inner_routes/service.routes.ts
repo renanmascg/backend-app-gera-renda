@@ -15,6 +15,7 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 
 		const {
 			name,
+			email,
 			lat,
 			long,
 			endereco,
@@ -30,6 +31,7 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 		const newService = await createNewUserServer.exec({
 			daysOpening,
 			name,
+			email,
 			lat,
 			long,
 			endereco,
@@ -40,6 +42,25 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 		});
 
 		return res.json(newService);
+	} catch (error) {
+		return res.status(400).json({ err: error.message });
+	}
+});
+
+servicesRouter.post('/logo', upload.single('logoImage'), async (req, res) => {
+	try {
+		const { file } = req;
+
+		const { id } = req.body;
+
+		const createNewUserServer = new CreateNewUserServerService();
+
+		const updatedService = await createNewUserServer.createAndSaveUserLogoAWS({
+			image: file,
+			serviceId: id,
+		});
+
+		return res.json(updatedService);
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}
