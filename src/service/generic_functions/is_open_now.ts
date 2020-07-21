@@ -14,8 +14,6 @@ function isOpenNow(daysOpening: any): boolean {
 
 	const diaSemana = DE_PARA_DATAS[hoje.weekday()];
 
-	console.log('dia Semana', diaSemana);
-
 	const day: IOpen = daysOpening[`${diaSemana}`];
 
 	if (!day.isOpen) {
@@ -39,9 +37,6 @@ async function areServicesOpen(list: ServiceInterface[]): Promise<void> {
 		const openingHours = await OpeningHoursSchema.findOne({
 			_id: list[i].openingHour,
 		});
-
-		console.log(openingHours);
-
 		list[i].isOpen = isOpenNow(openingHours);
 	}
 }

@@ -2,6 +2,7 @@ import ServiceSchema from '../models/service_schema';
 import { ServiceInterface } from '../models/interfaces/service_interface';
 import calculateDistanceBetweenCoordinates from './generic_functions/calculate_distance_between_coordinates';
 import areServicesOpen from './generic_functions/is_open_now';
+import getCategoriesInfo from './generic_functions/get_categories_info';
 
 interface LatLongInterface {
 	distance: number;
@@ -36,6 +37,8 @@ class FindWithinRangeService {
 
 		await areServicesOpen(services);
 
+		await getCategoriesInfo(services);
+
 		this._removeUnnecessaryInfo(services);
 
 		return services;
@@ -45,9 +48,9 @@ class FindWithinRangeService {
 		list.forEach(serv => {
 			delete serv.openingHour;
 			delete serv.services;
-			delete serv.qtdPessoasContato;
 			delete serv.formasPagamento;
 			delete serv.email;
+			delete serv.categoria;
 		});
 	}
 }

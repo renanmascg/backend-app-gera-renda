@@ -6,6 +6,7 @@ export interface LocationInterface {
 export interface ServiceInterface {
 	location: LocationInterface;
 	email: string;
+	categorieUrl: string;
 	distance: string;
 	qtdPessoasContato: number;
 	reviewScore: number;
