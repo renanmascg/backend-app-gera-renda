@@ -5,6 +5,7 @@ export interface LocationInterface {
 
 export interface ServiceInterface {
 	location: LocationInterface;
+	email: string;
 	distance: string;
 	qtdPessoasContato: number;
 	reviewScore: number;
@@ -18,5 +19,8 @@ export interface ServiceInterface {
 	descricao: string;
 	createdAt: Date;
 	updatedAt: Date;
+	logoUrl: string;
+	isOpen: boolean;
+	services: any;
 	__v: number;
 }
