@@ -37,6 +37,8 @@ async function areServicesOpen(list: ServiceInterface[]): Promise<void> {
 		const openingHours = await OpeningHoursSchema.findOne({
 			_id: list[i].openingHour,
 		});
+
+		list[i].horarioFuncionamento = openingHours?.toObject();
 		list[i].isOpen = isOpenNow(openingHours);
 	}
 }

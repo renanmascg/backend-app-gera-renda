@@ -72,6 +72,7 @@ class FindServiceByCategorieService {
 			delete serv.formasPagamento;
 			delete serv.email;
 			delete serv.categoria;
+			delete serv.horarioFuncionamento;
 		});
 	}
 }

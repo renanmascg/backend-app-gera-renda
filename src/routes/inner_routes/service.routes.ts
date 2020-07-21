@@ -5,6 +5,7 @@ import CreateNewUserServerService from '../../service/createNewUserServerService
 import FindWithinRangeService from '../../service/findWithinRangeService';
 import FindServiceByCategorieService from '../../service/findServiceByCategorieService';
 import FindServiceOrCategoriesService from '../../service/findServiceOrCategorieService';
+import GetFullServiceInfoService from '../../service/services/getFullServiceInfoService';
 
 const servicesRouter = Router();
 const upload = multer();
@@ -112,6 +113,20 @@ servicesRouter.post('/find', async (req, res) => {
 		const response = await findServiceOrCategorie.exec({ keyword, lat, long });
 
 		return res.json(response);
+	} catch (error) {
+		return res.status(400).json({ err: error.message });
+	}
+});
+
+servicesRouter.post('/single', async (req, res) => {
+	try {
+		const { id, lat, long } = req.body;
+
+		const getFullServiceInfo = new GetFullServiceInfoService();
+
+		const service = await getFullServiceInfo.exec({ id, lat, long });
+
+		return res.json(service);
 	} catch (error) {
 		return res.status(400).json({ err: error.message });
 	}

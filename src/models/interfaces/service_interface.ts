@@ -15,8 +15,9 @@ export interface ServiceInterface {
 	categoria: string;
 	endereco: string;
 	telefone: string;
-	formasPagamento: string;
+	formasPagamento: any;
 	openingHour: string;
+	horarioFuncionamento: any;
 	descricao: string;
 	createdAt: Date;
 	updatedAt: Date;
