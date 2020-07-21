@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import ServicosPrestadosSchema from './servicos_prestados';
 
 const ServiceSchema: Schema = new Schema(
 	{
@@ -25,6 +26,7 @@ const ServiceSchema: Schema = new Schema(
 			ref: 'aki-openinghours',
 			required: true,
 		},
+		services: { type: [ServicosPrestadosSchema], default: [] },
 		descricao: { type: String, required: true },
 		logoUrl: { type: String },
 		qtdPessoasContato: { type: Number, default: 0 },

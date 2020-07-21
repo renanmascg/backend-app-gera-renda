@@ -11,8 +11,6 @@ const upload = multer();
 
 servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 	try {
-		const { file } = req;
-
 		const {
 			name,
 			email,
@@ -24,6 +22,7 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 			categoria,
 			formasPagamento,
 			daysOpening,
+			services,
 		} = req.body;
 
 		const createNewUserServer = new CreateNewUserServerService();
@@ -39,6 +38,7 @@ servicesRouter.post('/', upload.single('logoImage'), async (req, res) => {
 			descricao,
 			categoria,
 			formasPagamento,
+			services,
 		});
 
 		return res.json(newService);

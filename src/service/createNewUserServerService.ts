@@ -14,6 +14,7 @@ interface RequestDTO {
 	telefone: string;
 	formasPagamento: any;
 	daysOpening: any;
+	services: any[];
 	descricao: string;
 	categoria: string;
 	image?: Express.Multer.File;
@@ -28,6 +29,7 @@ interface ServiceParamsInterface {
 	telefone: string;
 	formasPagamentoId: string;
 	openHoursId: string;
+	services: any[];
 	descricao: string;
 	categoria: string;
 }
@@ -50,7 +52,7 @@ class CreateNewUserServer {
 		daysOpening,
 		descricao,
 		categoria,
-		image,
+		services,
 	}: RequestDTO): Promise<Document> {
 		const openHours = await this.createOpeningHours(daysOpening);
 
@@ -64,6 +66,7 @@ class CreateNewUserServer {
 			endereco,
 			telefone,
 			categoria,
+			services,
 			formasPagamentoId: paymentMethods.id,
 			openHoursId: openHours.id,
 			descricao,
@@ -102,6 +105,7 @@ class CreateNewUserServer {
 		formasPagamentoId,
 		openHoursId,
 		descricao,
+		services,
 		categoria,
 	}: ServiceParamsInterface): Promise<Document> {
 		try {
@@ -112,6 +116,7 @@ class CreateNewUserServer {
 					coordinates: [long, lat],
 				},
 				categoria,
+				services,
 				endereco,
 				telefone,
 				formasPagamento: formasPagamentoId,
