@@ -29,8 +29,6 @@ export default function calculateDistanceBetweenCoordinates({
 			) / 1000
 		).toFixed(1);
 
-		delete obj.location;
-
 		return obj;
 	});
 

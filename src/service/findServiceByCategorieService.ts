@@ -73,6 +73,7 @@ class FindServiceByCategorieService {
 			delete serv.email;
 			delete serv.categoria;
 			delete serv.horarioFuncionamento;
+			delete serv.location;
 		});
 	}
 }
