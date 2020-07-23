@@ -4,11 +4,22 @@ import UpdateReviewService from '../../service/ReviewsServices/updateReviewServi
 import AddReviewService from '../../service/ReviewsServices/addReviewService';
 
 import ensureAuthenticated from '../../middlewares/ensureAuthenticated';
+import GetReviewsService from '../../service/ReviewsServices/getReviewsService';
 
 const reviewsRouter = Router();
 
-reviewsRouter.get('/', async (req, res) => {
-	return res.json({ hello: 'ok!' });
+reviewsRouter.post('/service', async (req, res) => {
+	try {
+		const { serviceId } = req.body;
+
+		const getReviews = new GetReviewsService();
+
+		const reviews = await getReviews.fromService(serviceId);
+
+		return res.json({ reviews });
+	} catch (e) {
+		return res.status(400).json({ error: e.message });
+	}
 });
 
 reviewsRouter.post('/', ensureAuthenticated, async (req, res) => {

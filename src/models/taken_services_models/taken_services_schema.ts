@@ -13,6 +13,7 @@ const TakenServiceSchema: Schema = new Schema(
 			required: true,
 		},
 		isRated: { type: Boolean, default: false },
+		isServiceDone: { type: Boolean, default: false },
 		rate: { type: Number },
 		text: { type: String },
 	},

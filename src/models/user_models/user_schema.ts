@@ -9,6 +9,7 @@ const UserSchema: Schema = new Schema(
 		},
 		password: { type: String, required: true },
 		name: { type: String, required: true },
+		imageUrl: { type: String, default: '' },
 	},
 	{
 		timestamps: true,

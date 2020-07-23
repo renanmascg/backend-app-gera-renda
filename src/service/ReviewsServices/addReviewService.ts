@@ -12,7 +12,16 @@ class AddReviewService {
 			throw Error('Send all variables please');
 		}
 
-		const review = TakenServiceSchema.create({
+		const takenService = await TakenServiceSchema.find({
+			serviceId,
+			userId,
+		});
+
+		if (!takenService) {
+			throw Error('This error already exists.');
+		}
+
+		const review = await TakenServiceSchema.create({
 			serviceId,
 			userId,
 		});

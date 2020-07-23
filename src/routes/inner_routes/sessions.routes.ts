@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import AuthenticateUserService from '../../service/sessions_services/AuthenticateSessionsService';
+import ensureAuthenticated from '../../middlewares/ensureAuthenticated';
 
 const sessionsRouter = Router();
 
@@ -21,5 +22,13 @@ sessionsRouter.post('/', async (request, response) => {
 		return response.status(400).json({ error: error.message });
 	}
 });
+
+sessionsRouter.get(
+	'/validate-token',
+	ensureAuthenticated,
+	async (_, response) => {
+		return response.send();
+	},
+);
 
 export default sessionsRouter;
