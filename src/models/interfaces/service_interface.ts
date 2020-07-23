@@ -8,7 +8,7 @@ export interface ServiceInterface {
 	email: string;
 	categorieUrl: string;
 	distance: string;
-	qtdPessoasContato: number;
+	qtdPessoasReview: number;
 	reviewScore: number;
 	_id: string;
 	name: string;

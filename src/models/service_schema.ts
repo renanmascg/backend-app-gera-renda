@@ -29,7 +29,7 @@ const ServiceSchema: Schema = new Schema(
 		services: { type: [ServicosPrestadosSchema], default: [] },
 		descricao: { type: String, required: true },
 		logoUrl: { type: String },
-		qtdPessoasContato: { type: Number, default: 0 },
+		qtdPessoasReview: { type: Number, default: 0 },
 		reviewScore: { type: Number, default: 0.0 },
 	},
 	{
