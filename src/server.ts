@@ -1,12 +1,10 @@
-import './database/mongodb';
-import dotenv from 'dotenv';
-
 import express from 'express';
 import cors from 'cors';
 
 import routes from './routes';
 
-dotenv.config();
+import 'dotenv/config';
+import './database/mongodb';
 
 const app = express();
 
