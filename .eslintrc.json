@@ -23,6 +23,7 @@
 		"@typescript-eslint/camelcase": "off",
 		"no-underscore-dangle":"off",
 		"no-plusplus":"off",
+		"no-param-reassign":"off",
 		"camelcase": "off",
 		"prettier/prettier": "error",
 		"import/extensions": [

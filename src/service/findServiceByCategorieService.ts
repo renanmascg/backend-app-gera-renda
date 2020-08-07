@@ -11,6 +11,7 @@ interface RequestDTO {
 	long: number;
 	distance: number;
 	categorieId: string;
+	sortMethod?: string;
 }
 
 class FindServiceByCategorieService {
@@ -19,12 +20,14 @@ class FindServiceByCategorieService {
 		long,
 		distance,
 		categorieId,
+		sortMethod,
 	}: RequestDTO): Promise<ServiceInterface[]> {
 		const documents = await this.findDocumentsWithinRangeAndCategorie(
 			lat,
 			long,
 			distance,
 			categorieId,
+			sortMethod,
 		);
 
 		const services = calculateDistanceBetweenCoordinates({
@@ -47,7 +50,16 @@ class FindServiceByCategorieService {
 		long: number,
 		distance: number,
 		categorieId: string,
+		sortMethod?: string,
 	): Promise<Document[]> {
+		const sort: {
+			[key: string]: any;
+		} = {};
+
+		if (sortMethod === 'RANKING') {
+			sort.reviewScore = 'desc';
+		}
+
 		const documents = await ServiceSchema.find({
 			location: {
 				$near: {
@@ -60,7 +72,7 @@ class FindServiceByCategorieService {
 				},
 			},
 			categoria: categorieId,
-		});
+		}).sort(sort);
 
 		return documents;
 	}

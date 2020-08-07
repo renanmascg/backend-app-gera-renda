@@ -89,6 +89,8 @@ servicesRouter.post('/categorie-service', async (req, res) => {
 	try {
 		const { lat, long, distance, categorieId } = req.body;
 
+		const { sort } = req.query;
+
 		const findServiceByCategorie = new FindServiceByCategorieService();
 
 		const services = await findServiceByCategorie.exec({
@@ -96,6 +98,7 @@ servicesRouter.post('/categorie-service', async (req, res) => {
 			long,
 			distance,
 			categorieId,
+			sortMethod: sort?.toString(),
 		});
 
 		return res.json({ services });
